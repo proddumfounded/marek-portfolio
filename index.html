@@ -74,6 +74,7 @@ footer{padding:40px 5%;text-align:center;color:#555;font-size:14px;border-top:1p
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1;
+            pointer-events: none;
         }
         .modal-container {
             position: relative;
@@ -296,6 +297,7 @@ prod.dumfounded@gmail.com<br>
 
         document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
 
+        // Scroll animations using IntersectionObserver for video cards
         playlist.forEach((videoId, index) => {
             const card = document.createElement('div');
             card.className = 'video-card';
@@ -307,6 +309,7 @@ prod.dumfounded@gmail.com<br>
             });
             card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            observer.observe(card);
             grid.appendChild(card);
         });
             card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
@@ -338,7 +341,6 @@ prod.dumfounded@gmail.com<br>
         }
 
         modalClose.addEventListener('click', closeModal);
-        modal.querySelector('.modal-overlay').addEventListener('click', closeModal);
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
