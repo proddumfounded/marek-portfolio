@@ -3,69 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marek Walecki - YouTube Style 2012</title>
+<title>dumfounded - YouTube</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a0a;color:#ccc;font-family:'Segoe UI',Arial,sans-serif;font-size:13px}
 a{color:#3399ff;text-decoration:none}
 a:hover{text-decoration:underline}
 .header{background:#000;height:50px;border-bottom:1px solid #333;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:20px;font-weight:bold;color:#fff}
+.logo{font-size:22px;font-weight:bold;color:#fff}
 .logo span{color:#ff0000}
-.search-box{flex:1;max-width:500px;margin:0 20px}
-.search-box input{width:100%;padding:6px 10px;background:#222;border:1px solid #444;color:#fff;border-radius:2px}
+.search-box{flex:1;max-width:600px;margin:0 20px}
+.search-box input{width:100%;padding:7px 10px;background:#222;border:1px solid #444;color:#fff;border-radius:2px}
 .nav-links a{color:#ccc;margin-left:15px;font-size:12px}
-.container{display:flex;padding:20px}
-.sidebar{width:150px;padding-right:20px;font-size:13px}
-.sidebar a{display:block;padding:8px 0;color:#ccc}
-.sidebar a:hover{background:#222}
-.sidebar-title{font-weight:bold;margin:15px 0 10px;color:#999;font-size:12px;text-transform:uppercase}
-.main{flex:1}
+.container{display:flex;min-height:calc(100vh - 70px)}
+.main{flex:1;padding:20px}
+.playlist{flex:0 0 320px;background:#000;border-left:1px solid #333;padding:15px;overflow-y:auto;height:calc(100vh - 70px)}
+.playlist-title{font-size:14px;color:#fff;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #333}
+.playlist-item{display:flex;margin-bottom:10px;cursor:pointer}
+.playlist-thumb{width:120px;height:68px;background:#333;flex-shrink:0;margin-right:10px;position:relative}
+.playlist-thumb img{width:100%;height:100%;object-fit:cover}
+.playlist-duration{position:absolute;bottom:3px;right:3px;background:rgba(0,0,0,0.8);color:#fff;padding:2px 4px;font-size:10px}
+.playlist-info{flex:1}
+.playlist-video-title{font-size:13px;color:#fff;margin-bottom:3px;line-height:1.3}
+.playlist-video-meta{font-size:11px;color:#999}
 .section-title{font-size:16px;font-weight:normal;color:#fff;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #333}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
-.video-card{background:#111;border:1px solid #222}
+.video-card{cursor:pointer}
 .video-thumb{width:100%;aspect-ratio:16/9;background:#333;position:relative;overflow:hidden}
 .video-thumb img{width:100%;height:100%;object-fit:cover}
 .video-duration{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,0.8);color:#fff;padding:2px 4px;font-size:11px}
-.video-info{padding:10px}
+.video-info{padding:8px 0}
 .video-title{font-size:13px;color:#fff;margin-bottom:5px;line-height:1.3}
 .video-meta{font-size:11px;color:#999}
-.footer{background:#000;border-top:1px solid #333;padding:20px;color:#666;font-size:11px;margin-top:30px}
+.channel-header{display:flex;align-items:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #333}
+.channel-avatar{width:80px;height:80px;background:#333;border-radius:50%;margin-right:15px}
+.channel-info{flex:1}
+.channel-name{font-size:24px;color:#fff;margin-bottom:5px}
+.channel-stats{font-size:12px;color:#999}
+.subscribe-btn{background:#ff0000;color:#fff;border:none;padding:8px 15px;font-weight:bold;margin-top:10px;cursor:pointer}
+.subscriber-count{color:#00ff00;font-size:12px}
 </style>
 </head>
 <body>
 <div class="header">
-<div class="logo"><span>YouTube</span> <span style="color:#ccc;font-size:14px">2012 Style</span></div>
+<div class="logo"><span>YouTube</span></div>
 <div class="search-box">
-<input type="text" placeholder="Szukaj filmów..." readonly>
+<input type="text" placeholder="Szukaj filmów...">
 </div>
 <div class="nav-links">
 <a href="#">Upload</a>
-<a href="#">User</a>
+<a href="#">Sign in</a>
 </div>
 </div>
 
 <div class="container">
-<div class="sidebar">
-<div class="sidebar-title">Nawigacja</div>
-<a href="#">Strona główna</a>
-<a href="#">Subskrypcje</a>
-<a href="#">Historia</a>
-<div class="sidebar-title">Kanał</div>
-<a href="#">Marek Walecki</a>
+<div class="main">
+<div class="channel-header">
+<div class="channel-avatar"></div>
+<div class="channel-info">
+<div class="channel-name">dumfounded</div>
+<div class="channel-stats">1,000,000 subskrybentów</div>
+<button class="subscribe-btn">SUBSKRYBUJ</button>
+</div>
 </div>
 
-<div class="main">
-<h2 class="section-title">Music Videos</h2>
+<h2 class="section-title">Filmy</h2>
 <div class="video-grid" id="video-grid">
 </div>
 </div>
-</div>
 
-<div class="footer">
-© 2026 Marek Walecki - YouTube Style Portfolio
+<div class="playlist">
+<div class="playlist-title">Playlista: dumfounded music videos</div>
+<div id="playlist-items">
 </div>
-
+</div>
+</div>
 <script>
 const videos = [
 {videoId:"dQw4w9WgXcQ",title:"Teledysk 1",role:"Direction / Editing / Color"},
@@ -73,6 +85,10 @@ const videos = [
 ];
 
 const grid = document.getElementById("video-grid");
+const playlist = document.getElementById("playlist-items");
+
+function randomViews(){return (Math.random()*9+1).toFixed(1)+"M wyświetleń";}
+function randomLikes(){return Math.floor(Math.random()*500)+" tys. polubień";}
 
 videos.forEach(video => {
 const card = document.createElement("div");
@@ -84,11 +100,26 @@ card.innerHTML = `
 </div>
 <div class="video-info">
 <div class="video-title">${video.title}</div>
-<div class="video-meta">${video.role}<br>Marek Walecki</div>
+<div class="video-meta">dumfounded<br>${randomViews()}</div>
 </div>
 `;
 card.addEventListener("click",()=>{window.open(`https://www.youtube.com/watch?v=${video.videoId}`,"_blank");});
 grid.appendChild(card);
+
+const item = document.createElement("div");
+item.className = "playlist-item";
+item.innerHTML = `
+<div class="playlist-thumb">
+<img src="https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg">
+<div class="playlist-duration">3:45</div>
+</div>
+<div class="playlist-info">
+<div class="playlist-video-title">${video.title}</div>
+<div class="playlist-video-meta">dumfounded</div>
+</div>
+`;
+item.addEventListener("click",()=>{window.open(`https://www.youtube.com/watch?v=${video.videoId}`,"_blank");});
+playlist.appendChild(item);
 });
 </script>
 </body>
