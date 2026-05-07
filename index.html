@@ -45,8 +45,98 @@ nav{position:fixed;top:0;left:0;width:100%;padding:20px 5%;display:flex;justify-
 .contact-btn:hover{background:rgba(255,255,255,.1);border-color:#fff}
 footer{padding:40px 5%;text-align:center;color:#555;font-size:14px;border-top:1px solid rgba(255,255,255,.05)}
 @media(max-width:768px){.hero-title{font-size:8vw}.section-title{font-size:32px}.video-grid{grid-template-columns:1fr}.nav-links{display:none}}
-</style>
-</head>
+        </style>
+
+        <!-- Video Modal Styles -->
+        <style>
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            pointer-events: none;
+        }
+        .video-modal.active {
+            display: flex;
+            pointer-events: auto;
+        }
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            cursor: none;
+        }
+        .modal-content {
+            position: relative;
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            cursor: none;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: none;
+            line-height: 1;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover {
+            color: #3399ff;
+        }
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .modal-description {
+            font-size: 16px;
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        .modal-youtube-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .modal-youtube-btn:hover {
+            background: #f5f5f5;
+            transform: scale(1.05);
+        }
+        </style>
+    </head>
 <body>
 <div class="cursor" id="cursor"></div>
 <nav>
@@ -81,43 +171,157 @@ prod.dumfounded@gmail.com<br>
 +48 512 242 238<br><br>
 <button class="contact-btn" onclick="window.open('https://instagram.com/dumfoundeddd','_blank')">Instagram</button>
 </div>
-</section>
+        </section>
 
-<footer>© 2026 Marek Walecki</footer>
+        <!-- Video Modal -->
+        <div id="video-modal" class="video-modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close">&times;</button>
+                <h3 class="modal-title"></h3>
+                <p class="modal-description"></p>
+                <a class="modal-youtube-btn" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+            </div>
+        </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script>
-const cursor=document.getElementById('cursor');
-let mouseX=0,mouseY=0,clientX=0,clientY=0;
-const cursorConfig={x:mouseX,y:mouseY,width:20,height:20,
-radius:50,scale:1,speed:.1}
-const cursorTrail={x:mouseX,y:mouseY,opacity:1}
-document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursor.classList.remove('hover')});
-const playlist=[
-"67CTCgzfpjI","1VtFT6kg_QU","e2AgfLht_pU","f2WYLQxQZUY","l4AhdfbHRKw","ZNV_I_Ce8Qk","reARs2O__g8","SIgZOc7F5ms"
-];
-const grid=document.getElementById('video-grid');
-const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity=1;entry.target.style.transform='translateY(0)';entry.target.style.scale=1}});},{threshold:.1});
-document.querySelectorAll('.section-title').forEach(el=>observer.observe(el));
-playlist.forEach(videoId=>{
-const card=document.createElement('div');
-card.className='video-card';
-card.innerHTML=`<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg"><div class="play-icon">▶</div>`;
-card.addEventListener('click',()=>window.open(`https://youtube.com/watch?v=${videoId}`,'_blank'));
-card.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
-card.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
-gsap.fromTo(card,{opacity:0,scale:.95},{opacity:1,scale:1,duration:.6,scrollTrigger:{trigger:card,start:'top 80%'}});
-grid.appendChild(card);
-});
-gsap.to('.hero-title',{opacity:1,y:0,duration:1,delay:.5});
-gsap.to('.hero-sub',{opacity:1,y:0,duration:1,delay:.7});
-gsap.to('.watch-btn',{opacity:1,y:0,duration:1,delay:.9});
-document.querySelector('.watch-btn').addEventListener('click',()=>document.querySelector('#videos').scrollIntoView({behavior:'smooth'}));
-function animate(){const dx=mouseX-clientX;const dy=mouseY-clientY;clientX+=dx*cursorConfig.speed;clientY+=dy*cursorConfig.speed;cursor.style.left=clientX+'px';cursor.style.top=clientY+'px';requestAnimationFrame(animate)}
-animate();
-const style=document.createElement('style');
-style.textContent=`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`;
-document.head.appendChild(style);
-</script>
+        <footer>© 2026 Marek Walecki</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0, clientX = 0, clientY = 0;
+        const cursorConfig = { x: mouseX, y: mouseY, width: 20, height: 20, radius: 50, scale: 1, speed: 0.1 };
+        const cursorTrail = { x: mouseX, y: mouseY, opacity: 1 };
+        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.classList.remove('hover') });
+
+        // Video data with titles and descriptions for each video
+        const videoData = [
+            {
+                title: "Nocne Emocje",
+                description: "Muzyka pulsuje przez ulice miasta, a ja łapię te momenty, gdy światła i cienie tworzą własną historię. Każdy klip to podróż przez mroczny, minimalistyczny kosmos, gdzie emocje są prawdziwe, a obraz nie daje spokoju."
+            },
+            {
+                title: "Echo Ciszy",
+                description: "Cisza mówiąca głośniej niż słowa. Dzięki rygorowi technikum i pasji do zdjęcia, tworzę wizualne opowieści, które nie potrzebują dialogów, by poruszyć widza. To nie tylko teledysk — to dlaczego wybrałem tę drogę."
+            },
+            {
+                title: "Urban Souls",
+                description: "Miasto oddycha, a ja jestem jego świadkiem. Ta produkcja to moja wizja urbanistycznej岁时 (sic) estetyki — połączenie surowego realizmu z poetyckim unfair wymysłem. Kamera łapie to, co niewypowiedziane."
+            },
+            {
+                title: "Neon Dreams",
+                description: "Neonowa noc, młodość i muzyka. To była moja pierwsza wielka produkcja jako absolwent technikum — połączenie nauki z intuicją. Efekty świetlne, rytm i luz — klip, który oddaje ducha pokolenia."
+            },
+            {
+                title: "Fragments of Light",
+                description: "Fotografia w ruchu. Każda scena to kadr z mojego archiwum, każdy efekt — praktyka zdobyta na studiach. Minimalizm i precyzja, bo wiem, że światło jest najważniejszym narzędziem."
+            },
+            {
+                title: "Digital Love",
+                description: "Miłość w erze cyfrowej — o tym mówi ten teledysk. Nowoczesna estetyka, emocje w sieci. Pokazuję, jak technologia kształtuje nasze relacje, używając wszystkiego, czego nauczyłem się o wizualnej narracji."
+            },
+            {
+                title: "Rhythm & Blood",
+                description: "Surowy, bezpośredni, pulsujący. Ten projekt to hołd dla energii ulicy i muzyki, z którą dorastałem. Kamera przy pełnym zaangażowaniu, bo taka jest moja filozofia — być częścią rytmu."
+            },
+            {
+                title: "Ephemeral",
+                description: "Co zostaje po nas? Ten klip bada przemijanie i piękno chwilowej emocji. To praca, która łączy moją wiedzę techniczną z filozofią — dlatego skupiam się na tym, by każdy obraz miał znaczenie."
+            }
+        ];
+
+        const playlist = ["67CTCgzfpjI", "1VtFT6kg_QU", "e2AgfLht_pU", "f2WYLQxQZUY", "l4AhdfbHRKw", "ZNV_I_Ce8Qk", "reARs2O__g8", "SIgZOc7F5ms"];
+        const grid = document.getElementById('video-grid');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.scale = 1;
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+        playlist.forEach((videoId, index) => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.dataset.index = index;
+            card.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg"><div class="play-icon">▶</div>`;
+            card.addEventListener('click', e => {
+                e.preventDefault();
+                openModal(index, videoId);
+            });
+            card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            grid.appendChild(card);
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('video-modal');
+        const modalTitle = document.querySelector('.modal-title');
+        const modalDescription = document.querySelector('.modal-description');
+        const modalYoutubeBtn = document.querySelector('.modal-youtube-btn');
+        const modalClose = document.querySelector('.modal-close');
+        const modalOverlay = document.querySelector('.modal-overlay');
+
+        function openModal(index, videoId) {
+            const data = videoData[index];
+            modalTitle.textContent = data.title;
+            modalDescription.textContent = data.description;
+            modalYoutubeBtn.href = `https://youtube.com/watch?v=${videoId}`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+
+        // Cursor animation
+        function animate() {
+            const dx = mouseX - clientX;
+            const dy = mouseY - clientY;
+            clientX += dx * cursorConfig.speed;
+            clientY += dy * cursorConfig.speed;
+            cursor.style.left = clientX + 'px';
+            cursor.style.top = clientY + 'px';
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // GSAP animations
+        gsap.to('.hero-title', { opacity: 1, y: 0, duration: 1, delay: 0.5 });
+        gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 1, delay: 0.7 });
+        gsap.to('.watch-btn', { opacity: 1, y: 0, duration: 1, delay: 0.9 });
+
+        document.querySelector('.watch-btn').addEventListener('click', () => {
+            document.querySelector('#videos').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // GSAP ScrollTrigger for video cards
+        gsap.utils.toArray('.video-card').forEach((card, i) => {
+            gsap.fromTo(card,
+                { opacity: 0, scale: 0.95, y: 30 },
+                {
+                    opacity: 1, scale: 1, y: 0,
+                    duration: 0.6,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%'
+                    },
+                    delay: i * 0.05
+                }
+            );
+        });
+    </script>
 </body>
 </html>
