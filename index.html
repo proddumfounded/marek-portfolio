@@ -240,12 +240,14 @@ prod.dumfounded@gmail.com<br>
         <footer>© 2026 Marek Walecki</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
+        // Register GSAP plugin
+        gsap.registerPlugin(ScrollTrigger);
+
         const cursor = document.getElementById('cursor');
         let mouseX = 0, mouseY = 0, clientX = 0, clientY = 0;
-        const cursorConfig = { x: mouseX, y: mouseY, width: 20, height: 20, radius: 50, scale: 1, speed: 0.1 };
-        const cursorTrail = { x: mouseX, y: mouseY, opacity: 1 };
-        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.classList.remove('hover') });
+        let cursorVisible = false;
 
         // Video data
         const videoData = [
@@ -270,18 +272,42 @@ prod.dumfounded@gmail.com<br>
         const modalYoutubeBtn = document.querySelector('.modal-youtube-btn');
         const modalClose = document.querySelector('.modal-close');
 
-        // IntersectionObserver for scroll animations
-        const observer = new IntersectionObserver(entries => {
+        // Show cursor when mouse enters viewport
+        document.addEventListener('mouseenter', () => {
+            cursor.style.display = 'block';
+            cursorVisible = true;
+        });
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!cursorVisible) cursor.style.display = 'block';
+            cursorVisible = true;
+        });
+
+        // Cursor animation
+        function animate() {
+            const dx = mouseX - clientX;
+            const dy = mouseY - clientY;
+            clientX += dx * 0.15;
+            clientY += dy * 0.15;
+            cursor.style.left = clientX + 'px';
+            cursor.style.top = clientY + 'px';
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // IntersectionObserver for section titles
+        const titleObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0) scale(1)';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.2 });
 
-        // Observe section titles
-        document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+        document.querySelectorAll('.section-title').forEach(el => titleObserver.observe(el));
 
         // Build video cards
         playlist.forEach((videoId, index) => {
@@ -298,7 +324,20 @@ prod.dumfounded@gmail.com<br>
             card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
 
-            observer.observe(card);
+            gsap.fromTo(card,
+                { opacity: 0, scale: 0.95, y: 30 },
+                {
+                    opacity: 1, scale: 1, y: 0,
+                    duration: 0.6,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    delay: index * 0.05
+                }
+            );
+
             grid.appendChild(card);
         });
 
@@ -317,32 +356,12 @@ prod.dumfounded@gmail.com<br>
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            setTimeout(() => { modalThumb.src = ''; }, 300);
         }
 
         modalClose.addEventListener('click', closeModal);
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
-
-        // Cursor animation
-        let clientX = 0, clientY = 0;
-        function animate() {
-            const dx = mouseX - clientX;
-            const dy = mouseY - clientY;
-            clientX += dx * 0.1;
-            clientY += dy * 0.1;
-            cursor.style.left = clientX + 'px';
-            cursor.style.top = clientY + 'px';
-            requestAnimationFrame(animate);
-        }
-
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        animate();
 
         // GSAP hero animations
         gsap.to('.hero-title', { opacity: 1, y: 0, duration: 1, delay: 0.5 });
