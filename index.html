@@ -247,77 +247,22 @@ prod.dumfounded@gmail.com<br>
         const cursorTrail = { x: mouseX, y: mouseY, opacity: 1 };
         document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.classList.remove('hover') });
 
-        // Video data with titles and descriptions for each video
+        // Video data
         const videoData = [
-            {
-                title: "Blady - Zaufanie",
-                description: "Cut & Color Grading"
-            },
-            {
-                title: "Echo Ciszy",
-                description: "Cisza mówiąca głośniej niż słowa. Dzięki rygorowi technikum i pasji do zdjęcia, tworzę wizualne opowieści, które nie potrzebują dialogów, by poruszyć widza. To nie tylko teledysk — to dlaczego wybrałem tę drogę."
-            },
-            {
-                title: "Blady - Zaufanie",
-                description: "Cut & Color Grading"
-            },
-            {
-                title: "Neon Dreams",
-                description: "Neonowa noc, młodość i muzyka. To była moja pierwsza wielka produkcja jako absolwent technikum — połączenie nauki z intuicją. Efekty świetlne, rytm i luz — klip, który oddaje ducha pokolenia."
-            },
-            {
-                title: "Fragments of Light",
-                description: "Fotografia w ruchu. Każda scena to kadr z mojego archiwum, każdy efekt — praktyka zdobyta na studiach. Minimalizm i precyzja, bo wiem, że światło jest najważniejszym narzędziem."
-            },
-            {
-                title: "Digital Love",
-                description: "Miłość w erze cyfrowej — o tym mówi ten teledysk. Nowoczesna estetyka, emocje w sieci. Pokazuję, jak technologia kształtuje nasze relacje, używając wszystkiego, czego nauczyłem się o wizualnej narracji."
-            },
-            {
-                title: "Rhythm & Blood",
-                description: "Surowy, bezpośredni, pulsujący. Ten projekt to hołd dla energii ulicy i muzyki, z którą dorastałem. Kamera przy pełnym zaangażowaniu, bo taka jest moja filozofia — być częścią rytmu."
-            },
-            {
-                title: "Ephemeral",
-                description: "Co zostaje po nas? Ten klip bada przemijanie i piękno chwilowej emocji. To praca, która łączy moją wiedzę techniczną z filozofią — dlatego skupiam się na tym, by każdy obraz miał znaczenie."
-            }
+            { title: "Blady - Zaufanie", description: "Cut & Color Grading" },
+            { title: "Echo Ciszy", description: "Cisza mówiąca głośniej niż słowa. Dzięki rygorowi technikum i pasji do zdjęcia, tworzę wizualne opowieści, które nie potrzebują dialogów, by poruszyć widza. To nie tylko teledysk — to dlaczego wybrałem tę drogę." },
+            { title: "Neon Dreams", description: "Neonowa noc, młodość i muzyka. To była moja pierwsza wielka produkcja jako absolwent technikum — połączenie nauki z intuicją. Efekty świetlne, rytm i luz — klip, który oddaje ducha pokolenia." },
+            { title: "Fragments of Light", description: "Fotografia w ruchu. Każda scena to kadr z mojego archiwum, każdy efekt — praktyka zdobyta na studiach. Minimalizm i precyzja, bo wiem, że światło jest najważniejszym narzędziem." },
+            { title: "Digital Love", description: "Miłość w erze cyfrowej — o tym mówi ten teledysk. Nowoczesna estetyka, emocje w sieci. Pokazuję, jak technologia kształtuje nasze relacje, używając wszystkiego, czego nauczyłem się o wizualnej narracji." },
+            { title: "Rhythm & Blood", description: "Surowy, bezpośredni, pulsujący. Ten projekt to hołd dla energii ulicy i muzyki, z którą dorastałem. Kamera przy pełnym zaangażowaniu, bo taka jest moja filozofia — być częścią rytmu." },
+            { title: "Ephemeral", description: "Co zostaje po nas? Ten klip bada przemijanie i piękno chwilowej emocji. To praca, która łączy moją wiedzę techniczną z filozofią — dlatego skupiam się na tym, by każdy obraz miał znaczenie." },
+            { title: "Urban Souls", description: "Miasto oddycha, a ja jestem jego świadkiem. Ta produkcja to moja wizja miejskiej estetyki — połączenie surowego realizmu z poetyckim wyrazem. Kamera łapie to, co niewypowiedziane." }
         ];
 
         const playlist = ["67CTCgzfpjI", "1VtFT6kg_QU", "e2AgfLht_pU", "f2WYLQxQZUY", "l4AhdfbHRKw", "ZNV_I_Ce8Qk", "reARs2O__g8", "SIgZOc7F5ms"];
+
+        // Elements
         const grid = document.getElementById('video-grid');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                    entry.target.style.scale = 1;
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
-
-        // Scroll animations using IntersectionObserver for video cards
-        playlist.forEach((videoId, index) => {
-            const card = document.createElement('div');
-            card.className = 'video-card';
-            card.dataset.index = index;
-            card.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg"><div class="play-icon">▶</div>`;
-            card.addEventListener('click', e => {
-                e.preventDefault();
-                openModal(index, videoId);
-            });
-            card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            observer.observe(card);
-            grid.appendChild(card);
-        });
-            card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            grid.appendChild(card);
-        });
-
-        // Modal functionality
         const modal = document.getElementById('video-modal');
         const modalThumb = document.getElementById('modal-thumb');
         const modalTitle = document.querySelector('.modal-title');
@@ -325,8 +270,42 @@ prod.dumfounded@gmail.com<br>
         const modalYoutubeBtn = document.querySelector('.modal-youtube-btn');
         const modalClose = document.querySelector('.modal-close');
 
+        // IntersectionObserver for scroll animations
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe section titles
+        document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+        // Build video cards
+        playlist.forEach((videoId, index) => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.dataset.index = index;
+            card.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="${videoData[index]?.title || 'Video'}"><div class="play-icon">▶</div>`;
+
+            card.addEventListener('click', e => {
+                e.preventDefault();
+                openModal(index, videoId);
+            });
+
+            card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+
+            observer.observe(card);
+            grid.appendChild(card);
+        });
+
+        // Modal functions
         function openModal(index, videoId) {
             const data = videoData[index];
+            if (!data) return;
             modalThumb.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
             modalTitle.textContent = data.title;
             modalDescription.innerHTML = data.description;
@@ -338,6 +317,7 @@ prod.dumfounded@gmail.com<br>
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = '';
+            setTimeout(() => { modalThumb.src = ''; }, 300);
         }
 
         modalClose.addEventListener('click', closeModal);
@@ -346,40 +326,31 @@ prod.dumfounded@gmail.com<br>
         });
 
         // Cursor animation
+        let clientX = 0, clientY = 0;
         function animate() {
             const dx = mouseX - clientX;
             const dy = mouseY - clientY;
-            clientX += dx * cursorConfig.speed;
-            clientY += dy * cursorConfig.speed;
+            clientX += dx * 0.1;
+            clientY += dy * 0.1;
             cursor.style.left = clientX + 'px';
             cursor.style.top = clientY + 'px';
             requestAnimationFrame(animate);
         }
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
         animate();
 
-        // GSAP animations
+        // GSAP hero animations
         gsap.to('.hero-title', { opacity: 1, y: 0, duration: 1, delay: 0.5 });
         gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 1, delay: 0.7 });
         gsap.to('.watch-btn', { opacity: 1, y: 0, duration: 1, delay: 0.9 });
 
         document.querySelector('.watch-btn').addEventListener('click', () => {
             document.querySelector('#videos').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // GSAP ScrollTrigger for video cards
-        gsap.utils.toArray('.video-card').forEach((card, i) => {
-            gsap.fromTo(card,
-                { opacity: 0, scale: 0.95, y: 30 },
-                {
-                    opacity: 1, scale: 1, y: 0,
-                    duration: 0.6,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: 'top 85%'
-                    },
-                    delay: i * 0.05
-                }
-            );
         });
     </script>
 </body>
