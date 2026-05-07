@@ -270,7 +270,7 @@ prod.dumfounded@gmail.com<br>
         const videoData = [
             {
                 title: "Nocne Emocje",
-                description: "Muzyka pulsuje przez ulice miasta, a ja łapię te momenty, gdy światła i cienie tworzą własną historię. Każdy klip to podróż przez mroczny, minimalistyczny kosmos, gdzie emocje są prawdziwe, a obraz nie daje spokoju."
+                description: "Blady - Zaufanie<br>Cut & Color Grading"
             },
             {
                 title: "Echo Ciszy",
@@ -342,7 +342,7 @@ prod.dumfounded@gmail.com<br>
             const data = videoData[index];
             modalThumb.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
             modalTitle.textContent = data.title;
-            modalDescription.textContent = data.description;
+            modalDescription.innerHTML = data.description;
             modalYoutubeBtn.href = `https://youtube.com/watch?v=${videoId}`;
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
