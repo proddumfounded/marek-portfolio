@@ -11,9 +11,9 @@ section{padding:80px 8%}
 h1,h2{font-weight:800}
 h1{font-size:48px;margin-bottom:20px}
 h2{font-size:32px;margin-bottom:40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px}
 .card{background:#111;border-radius:20px;overflow:hidden}
-.thumb{width:100%;aspect-ratio:16/9;object-fit:cover}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#333}
 .card-content{padding:25px}
 .card-content h3{margin-bottom:10px}
 .role{opacity:.6;margin-bottom:20px}
@@ -31,23 +31,7 @@ footer{padding:60px 8%;border-top:1px solid rgba(255,255,255,.08);margin-top:80p
 
 <section>
 <h2>Portfolio</h2>
-<div class="grid">
-<div class="card">
-<img class="thumb" src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg">
-<div class="card-content">
-<h3>Film 1</h3>
-<div class="role">Direction • Editing • Color Grading</div>
-<a class="watch-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
-</div>
-</div>
-<div class="card">
-<img class="thumb" src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg">
-<div class="card-content">
-<h3>Film 2</h3>
-<div class="role">Assistant Director • Camera</div>
-<a class="watch-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
-</div>
-</div>
+<div class="grid" id="portfolio-grid">
 </div>
 </section>
 
@@ -71,5 +55,37 @@ proddumfounded@gmail.com<br>
 <footer>
 © 2026 Marek Walecki
 </footer>
+
+<script>
+const projects = [
+{title:"Blady - Zaufanie", youtube:"https://www.youtube.com/watch?v=67CTCgzfpjI", role:"Direction • Editing • Color"},
+{title:"DEXX - 1P+X GOBI", youtube:"YOUR_LINK_HERE", role:"Direction • Camera"},
+{title:"Jimmy Kosjusz - NIEBO NIE JEST LIMITEM", youtube:"YOUR_LINK_HERE", role:"Editing • VFX"},
+{title:"Antos - Obrażę Cię", youtube:"YOUR_LINK_HERE", role:"Direction • Post Production"},
+{title:"Blady Perła", youtube:"YOUR_LINK_HERE", role:"Full Production"},
+];
+
+const grid = document.getElementById("portfolio-grid");
+
+function getVideoId(url){
+const match = url.match(/[?&]v=([^&]+)/);
+return match ? match[1] : "";
+}
+
+projects.forEach(project => {
+const videoId = getVideoId(project.youtube);
+const card = document.createElement("div");
+card.className = "card";
+card.innerHTML = `
+<img class="thumb" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg">
+<div class="card-content">
+<h3>${project.title}</h3>
+<div class="role">${project.role}</div>
+<a class="watch-btn" href="${project.youtube}" target="_blank">Watch</a>
+</div>
+`;
+grid.appendChild(card);
+});
+</script>
 </body>
 </html>
