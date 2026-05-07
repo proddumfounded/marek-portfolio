@@ -11,8 +11,8 @@
 html{scroll-behavior:smooth}
 body{background:#0a0a0a;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden}
 *{cursor:none!important}
-.cursor{width:20px;height:20px;border:2px solid #fff;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .1s,height .1s,background .1s}
-.cursor.hover{width:40px;height:40px;background:rgba(255,255,255,.1)}
+.cursor{width:14px;height:14px;background:#fff;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .15s}
+.cursor.hover{width:40px;height:40px;background:rgba(255,255,255,.15)}
 ::-webkit-scrollbar{width:8px}
 ::-webkit-scrollbar-track{background:#111}
 ::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
@@ -98,30 +98,10 @@ footer{padding:40px 5%;text-align:center;color:#555;font-size:14px;border-top:1p
             height: 100%;
             object-fit: cover;
             display: block;
+            cursor: pointer;
         }
-        .modal-video-col::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-video-col::before {
-            content: '▶';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            color: #000;
-            z-index: 2;
+        .modal-video-col:hover .modal-thumb {
+            filter: brightness(1.1);
         }
         .modal-text-col {
             flex: 1;
@@ -269,8 +249,8 @@ prod.dumfounded@gmail.com<br>
         // Video data with titles and descriptions for each video
         const videoData = [
             {
-                title: "Nocne Emocje",
-                description: "Blady - Zaufanie<br>Cut & Color Grading"
+                title: "Blady - Zaufanie",
+                description: "Cut & Color Grading"
             },
             {
                 title: "Echo Ciszy",
@@ -325,6 +305,10 @@ prod.dumfounded@gmail.com<br>
                 e.preventDefault();
                 openModal(index, videoId);
             });
+            card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            grid.appendChild(card);
+        });
             card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             grid.appendChild(card);
