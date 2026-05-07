@@ -2,67 +2,73 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>dumfounded - Director Portfolio</title>
+<title>Marek Walecki - Director Portfolio</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#f1f1f1;color:#222;font-family:Arial,Helvetica,sans-serif;font-size:11px}
+body{background:#f1f1f1;color:#222;font-family:Arial,Helvetica,sans-serif;font-size:13px}
 a{color:#3399ff;text-decoration:none}
 a:hover{text-decoration:underline}
-.header{background:#fff;height:50px;border-bottom:1px solid #dcdcdc;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:18px;font-weight:bold;color:#222}
-.logo span{color:#cc181e}
-.menu-btn{width:24px;height:24px;background:#ddd;border:1px solid #ccc;color:#666;font-size:12px;line-height:22px;text-align:center;cursor:pointer}
-.search-box{flex:1;max-width:420px;margin:0 15px}
-.search-box input{width:100%;height:28px;padding:0 10px;border:1px solid #cccccc;background:#fff;color:#222;font-size:13px}
-.search-btn{width:40px;height:28px;background:#f5f5f5;border:1px solid #ccc;border-left:none;background:linear-gradient(to bottom,#f5f5f5,#e8e8e8);cursor:pointer;font-size:12px}
-.upload-btn{height:26px;padding:0 12px;background:#f5f5f5;border:1px solid #ccc;background:linear-gradient(to bottom,#f5f5f5,#e8e8e8);font-size:11px}
+.header{background:#fff;height:60px;border-bottom:1px solid #dcdcdc;padding:0 30px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:28px;font-weight:bold;color:#222;display:flex;align-items:center}
+.logo-marek{background:#cc181e;color:#fff;padding:4px 8px 4px 10px;border-radius:3px 0 0 3px;font-weight:bold}
+.logo-walecki{color:#222;padding:4px 10px 4px 8px;border-radius:0 3px 3px 0}
+.menu-btn{width:30px;height:30px;background:#ddd;border:1px solid #ccc;color:#666;font-size:14px;line-height:28px;text-align:center;cursor:pointer;margin-right:20px}
+.search-box{flex:1;max-width:500px}
+.search-box input{width:100%;height:34px;padding:0 12px;border:1px solid #cccccc;background:#fff;color:#222;font-size:14px}
+.search-btn{width:44px;height:34px;background:#f5f5f5;border:1px solid #ccc;border-left:none;background:linear-gradient(to bottom,#f5f5f5,#e8e8e8);cursor:pointer;font-size:14px}
 .container{display:flex}
-.sidebar{width:170px;background:#f7f7f7;border-right:1px solid #e2e2e2;padding:10px 0;font-size:11px}
-.sidebar-section{padding:8px 15px;border-bottom:1px solid #e2e2e2}
-.sidebar-title{font-size:10px;color:#777;margin-bottom:5px;text-transform:uppercase}
-.sidebar a{display:block;padding:4px 0;color:#222}
+.sidebar{width:200px;background:#f7f7f7;border-right:1px solid #e2e2e2;padding:15px 0;font-size:13px}
+.sidebar-section{padding:12px 20px;border-bottom:1px solid #e2e2e2}
+.sidebar-title{font-size:12px;color:#777;margin-bottom:8px;text-transform:uppercase}
+.sidebar a{display:block;padding:6px 0;color:#222;font-size:14px}
 .sidebar a:hover{background:#eee;color:#000}
-.main{flex:1;padding:20px}
-.content{max-width:1130px;margin:0 auto;display:flex}
-.video-player{width:640px;height:360px;background:#000;position:relative;margin-right:20px}
-.video-controls{position:absolute;bottom:0;left:0;right:0;height:30px;background:#111;display:flex;align-items:center;padding:0 10px}
-.progress{flex:1;height:4px;background:#444;position:relative}
+.main{flex:1;padding:30px}
+.content{max-width:1200px;margin:0 auto;display:flex}
+.video-player{width:720px;height:405px;background:#000;position:relative;margin-right:30px}
+.video-controls{position:absolute;bottom:0;left:0;right:0;height:36px;background:#111;display:flex;align-items:center;padding:0 12px}
+.progress{flex:1;height:5px;background:#444;position:relative}
 .progress-fill{width:35%;height:100%;background:#cc181e}
-.control-btn{width:20px;height:20px;background:#333;border:1px solid #555;color:#fff;font-size:10px;line-height:18px;text-align:center;margin-right:5px}
-.recommended{width:310px;background:#1b1b1b;padding:10px}
-.recommended-title{font-size:12px;color:#fff;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid #333}
-.rec-item{display:flex;padding:8px 0;border-bottom:1px solid #222;cursor:pointer}
+.control-btn{width:24px;height:24px;background:#333;border:1px solid #555;color:#fff;font-size:11px;line-height:22px;text-align:center;margin-right:8px}
+.recommended{width:360px;background:#1b1b1b;padding:15px}
+.recommended-title{font-size:14px;color:#fff;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #333}
+.rec-item{display:flex;padding:12px 0;border-bottom:1px solid #222;cursor:pointer}
 .rec-item:hover{background:#222}
 .rec-item.active{background:#2a2a2a}
-.rec-thumb{width:92px;height:52px;background:#333;flex-shrink:0;margin-right:10px;overflow:hidden}
+.rec-thumb{width:100px;height:56px;background:#333;flex-shrink:0;margin-right:12px;overflow:hidden}
 .rec-thumb img{width:100%;height:100%;object-fit:cover}
 .rec-info{flex:1}
-.rec-title{font-size:11px;color:#fff;margin-bottom:3px;line-height:1.3}
-.rec-meta{font-size:10px;color:#777}
-.video-info{background:#fff;border:1px solid #dcdcdc;padding:15px;margin-top:20px}
-.video-title{font-size:20px;color:#222;margin-bottom:5px}
-.video-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:11px;color:#777}
-.like-bar{display:flex;align-items:center;margin-bottom:10px}
-.like-btn{background:#f5f5f5;border:1px solid #ccc;padding:4px 15px;margin-right:5px;background:linear-gradient(to bottom,#f5f5f5,#e8e8e8);font-size:11px}
-.like-count{font-size:11px;color:#777}
-.actions .action-btn{background:none;border:1px solid #ccc;padding:4px 10px;margin-right:5px;font-size:10px}
+.rec-title{font-size:13px;color:#fff;margin-bottom:4px;line-height:1.3}
+.rec-meta{font-size:11px;color:#777}
+.video-info{background:#fff;border:1px solid #dcdcdc;padding:20px;margin-top:25px}
+.video-title{font-size:26px;color:#222;margin-bottom:8px}
+.video-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:13px;color:#777}
+.like-bar{display:flex;align-items:center;margin-bottom:12px}
+.like-btn{background:#f5f5f5;border:1px solid #ccc;padding:6px 18px;margin-right:8px;background:linear-gradient(to bottom,#f5f5f5,#e8e8e8);font-size:13px}
+.like-count{font-size:13px;color:#777}
+.actions .action-btn{background:none;border:1px solid #ccc;padding:6px 12px;margin-right:8px;font-size:12px}
+.footer{background:#fff;border-top:1px solid #dcdcdc;padding:30px;margin-top:30px}
+.footer-title{font-size:20px;color:#222;margin-bottom:15px}
+.footer-text{font-size:14px;color:#444;line-height:1.6;margin-bottom:15px}
+.footer-contact{font-size:13px;color:#777}
 </style>
 </head>
 <body>
 <div class="header">
-<div class="logo"><span>YouTube</span> Portfolio</div>
+<div class="logo">
+<span class="logo-marek">Marek</span>
+<span class="logo-walecki">Walecki</span>
+</div>
 <div class="menu-btn">☰</div>
 <div class="search-box">
-<input type="text" placeholder="Search">
+<input type="text" placeholder="Szukaj projektów...">
 </div>
 <div class="search-btn">🔍</div>
-<div class="upload-btn">Submit Inquiry</div>
 </div>
 
 <div class="container">
 <div class="sidebar">
 <div class="sidebar-section">
-<div class="sidebar-title">Main</div>
+<div class="sidebar-title">Portfolio</div>
 <a href="#">Featured</a>
 <a href="#">Music Videos</a>
 <a href="#">Commercials</a>
@@ -74,8 +80,8 @@ a:hover{text-decoration:underline}
 </div>
 <div class="sidebar-section">
 <div class="sidebar-title">Info</div>
-<a href="#">About</a>
-<a href="#">Contact</a>
+<a href="#">O MNIE</a>
+<a href="#">Kontakt</a>
 </div>
 </div>
 
@@ -83,9 +89,9 @@ a:hover{text-decoration:underline}
 <div class="content">
 <div style="flex:1">
 <div class="video-player">
-<div style="position:absolute;bottom:30px;left:0;right:0;padding:0 10px;color:#fff;font-size:14px;">
-<div>Project Title</div>
-<div style="font-size:12px;color:#aaa;margin-top:5px;">Director: dumfounded</div>
+<div style="position:absolute;bottom:36px;left:0;right:0;padding:0 15px;color:#fff;font-size:18px;">
+<div>Cinematic Music Video Project</div>
+<div style="font-size:14px;color:#aaa;margin-top:8px;">Creative Director & Video Creator</div>
 </div>
 <div class="video-controls">
 <div class="control-btn">◀</div>
@@ -96,18 +102,31 @@ a:hover{text-decoration:underline}
 </div>
 
 <div class="video-info">
-<div class="video-title">Cinematic Music Video Project</div>
+<div class="video-title">Music Video Project Title</div>
 <div class="video-meta">
-<span>dumfounded · Director • Editor • Colorist</span>
+<span>Marek Walecki · Director • Editor • Colorist • VFX</span>
 <span>1.2M views</span>
 </div>
 <div class="like-bar">
 <button class="like-btn">Like</button>
-<span class="like-count">1.5K likes</span>
+<span class="like-count">2.1K likes</span>
 </div>
 <div class="actions">
 <button class="action-btn">Share</button>
 <button class="action-btn">Archive</button>
+</div>
+</div>
+
+<div class="footer">
+<div class="footer-title">O MNIE</div>
+<div class="footer-text">
+Creative Director & Video Creator.<br>
+Absolwent Technikum Fototechnicznego. Stwórzmy razem coś więcej niż teledysk, stwórzmy sztukę.
+</div>
+<div class="footer-contact">
+proddumfounded@gmail.com<br>
++48 512 242 238<br>
+<a href="https://www.instagram.com/dumfoundeddd/" target="_blank">Instagram</a>
 </div>
 </div>
 </div>
@@ -118,21 +137,21 @@ a:hover{text-decoration:underline}
 <div class="rec-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg"></div>
 <div class="rec-info">
 <div class="rec-title">Music Video 1</div>
-<div class="rec-meta">dumfounded • 2024</div>
+<div class="rec-meta">Director • Editor • Color</div>
 </div>
 </div>
 <div class="rec-item">
 <div class="rec-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg"></div>
 <div class="rec-info">
 <div class="rec-title">Music Video 2</div>
-<div class="rec-meta">dumfounded • 2023</div>
+<div class="rec-meta">Editor • Camera • VFX</div>
 </div>
 </div>
 <div class="rec-item">
 <div class="rec-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg"></div>
 <div class="rec-info">
 <div class="rec-title">Commercial Project</div>
-<div class="rec-meta">dumfounded • 2023</div>
+<div class="rec-meta">Creative Direction</div>
 </div>
 </div>
 </div>
