@@ -42,6 +42,21 @@ nav{position:fixed;top:0;left:0;width:100%;padding:20px 5%;display:flex;justify-
 .video-card:hover::after{opacity:1}
 .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:60px;height:60px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#000;transition:.3s}
 .video-card:hover .play-icon{transform:translate(-50%,-50%) scale(1)}
+.video-card .video-title{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    opacity:0;
+    transition:opacity .3s;
+    z-index:2;
+    text-shadow:0 2px 4px rgba(0,0,0,0.5)
+}
+.video-card:hover .video-title{
+    opacity:1
+}
 .about{max-width:600px;font-size:18px;line-height:1.8;color:#aaa}
 .contact-buttons{display:flex;gap:20px;margin-top:40px}
 .contact-btn{padding:15px 30px;border:1px solid #333;border-radius:8px;color:#fff;font-size:14px;cursor:pointer;transition:.3s;background:rgba(255,255,255,.05)}
@@ -259,17 +274,23 @@ marekwalecki1@gmail.com<br>
 
         // Video data
         const videoData = [
-            { title: "Blady - Zaufanie", description: "Cut & Color Grading" },
-            { title: "Echo Ciszy", description: "Cisza mówiąca głośniej niż słowa. Dzięki rygorowi technikum i pasji do zdjęcia, tworzę wizualne opowieści, które nie potrzebują dialogów, by poruszyć widza. To nie tylko teledysk — to dlaczego wybrałem tę drogę." },
-            { title: "Neon Dreams", description: "Neonowa noc, młodość i muzyka. To była moja pierwsza wielka produkcja jako absolwent technikum — połączenie nauki z intuicją. Efekty świetlne, rytm i luz — klip, który oddaje ducha pokolenia." },
-            { title: "Fragments of Light", description: "Fotografia w ruchu. Każda scena to kadr z mojego archiwum, każdy efekt — praktyka zdobyta na studiach. Minimalizm i precyzja, bo wiem, że światło jest najważniejszym narzędziem." },
-            { title: "Digital Love", description: "Miłość w erze cyfrowej — o tym mówi ten teledysk. Nowoczesna estetyka, emocje w sieci. Pokazuję, jak technologia kształtuje nasze relacje, używając wszystkiego, czego nauczyłem się o wizualnej narracji." },
-            { title: "Rhythm & Blood", description: "Surowy, bezpośredni, pulsujący. Ten projekt to hołd dla energii ulicy i muzyki, z którą dorastałem. Kamera przy pełnym zaangażowaniu, bo taka jest moja filozofia — być częścią rytmu." },
-            { title: "Ephemeral", description: "Co zostaje po nas? Ten klip bada przemijanie i piękno chwilowej emocji. To praca, która łączy moją wiedzę techniczną z filozofią — dlatego skupiam się na tym, by każdy obraz miał znaczenie." },
-            { title: "Urban Souls", description: "Miasto oddycha, a ja jestem jego świadkiem. Ta produkcja to moja wizja miejskiej estetyki — połączenie surowego realizmu z poetyckim wyrazem. Kamera łapie to, co niewypowiedziane." }
+            { title: "Blady - Zaufanie", description: "Cut / Color Grading" },
+            { title: "DEXX - 1P+X", description: "Cut / Color Grading" },
+            { title: "Jimmy* ft. Kosjusz - NIEBO NIE JEST LIMITEM", description: "Co-Director / Cut / Color Grading / VFX" },
+            { title: "Antos - Obrażę Cię", description: "Cut / Color Grading" },
+            { title: "Blady - Perła", description: "Beat Production / Cut / Color Grading" },
+            { title: "Stvs - Pakistan (Unreleased)", description: "Co-Director / Cut / Color Grading / VFX" },
+            { title: "Antoś - MAM TO", description: "Co-Director / Cut / Color Grading / VFX / Title Card" },
+            { title: "Gottastral - Box Chevy", description: "Cut" },
+            { title: "Rydawarrior - NOWE CIOCIE", description: "VHS Camera Operator" },
+            { title: "GOBI - Wait now feat. DEXX", description: "Cut" },
+            { title: "Jimmy* ft. Bobin - SALDO", description: "Co-Director / Cut / Color Grade" },
+            { title: "Zuziula - 2SEXY", description: "Color Grading" },
+            { title: "stvs - RELIGIA", description: "Co-Director / Gaffer / Cut" },
+            { title: "stvs - od dawna (unreleased)", description: "Director / Cut / VFX" }
         ];
 
-        const playlist = ["67CTCgzfpjI", "1VtFT6kg_QU", "e2AgfLht_pU", "f2WYLQxQZUY", "l4AhdfbHRKw", "ZNV_I_Ce8Qk", "reARs2O__g8", "SIgZOc7F5ms"];
+        const playlist = ["67CTCgzfpjI", "2dk6ZX5sdCE", "1l2W7EtWD3g", "1VtFT6kg_QU", "jOZIGxLnmzQ", "e2AgfLht_pU", "XhTv1uLztMg", "f2WYLQxQZUY", "oPLELODfiss", "l4AhdfbHRKw", "ZNV_I_Ce8Qk", "reARs2O__g8", "SIgZOc7F5ms", "L1LgiTRN_n0"];
 
         // Elements
         const grid = document.getElementById('video-grid');
@@ -317,12 +338,16 @@ marekwalecki1@gmail.com<br>
 
         document.querySelectorAll('.section-title').forEach(el => titleObserver.observe(el));
 
-        // Build video cards
-        playlist.forEach((videoId, index) => {
-            const card = document.createElement('div');
-            card.className = 'video-card';
-            card.dataset.index = index;
-            card.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="${videoData[index]?.title || 'Video'}"><div class="play-icon">▶</div>`;
+            // Build video cards
+            playlist.forEach((videoId, index) => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.dataset.index = index;
+                card.innerHTML = `
+                    <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="${videoData[index]?.title || 'Video'}">
+                    <div class="play-icon">▶</div>
+                    <div class="video-title">${videoData[index]?.title || ''}</div>
+                `;
 
             card.addEventListener('click', e => {
                 e.preventDefault();
@@ -378,9 +403,10 @@ marekwalecki1@gmail.com<br>
 
         // Hero thumbnails
         const heroThumbs = [
-            "67CTCgzfpjI", "1VtFT6kg_QU", "e2AgfLht_pU",
-            "f2WYLQxQZUY", "l4AhdfbHRKw", "ZNV_I_Ce8Qk",
-            "reARs2O__g8", "SIgZOc7F5ms"
+            "67CTCgzfpjI", "2dk6ZX5sdCE", "1l2W7EtWD3g", "1VtFT6kg_QU", 
+            "jOZIGxLnmzQ", "e2AgfLht_pU", "XhTv1uLztMg", "f2WYLQxQZUY", 
+            "oPLELODfiss", "l4AhdfbHRKw", "ZNV_I_Ce8Qk", "reARs2O__g8", 
+            "SIgZOc7F5ms", "L1LgiTRN_n0"
         ];
         const cols = [
             document.getElementById('thumb-col-1'),
