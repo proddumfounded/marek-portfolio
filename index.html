@@ -24,9 +24,12 @@ nav{position:fixed;top:0;left:0;width:100%;padding:20px 5%;display:flex;justify-
 .nav-links a{color:#777;font-size:14px;transition:.3s;text-decoration:none}
 .nav-links a:hover{color:#fff}
 .hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center,rgba(0,0,0,.3),#0a0a0a),url('https://img.youtube.com/vi/67CTCgzfpjI/maxresdefault.jpg');background-size:cover;background-position:center;z-index:-1;filter:brightness(.5)}
+.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.3);z-index:-2}
+.hero-thumbs{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:space-between;padding:0 5%;z-index:-1}
+.thumb-col{flex:1;display:flex;flex-direction:column;gap:20px;transform:translateY(0)}
+.thumb-col img{width:100%;height:auto;border-radius:8px;object-fit:cover;opacity:.3}
 .hero-title{font-size:5vw; font-weight:800;letter-spacing:4px;margin-bottom:10px;opacity:0;transform:translateY(30px)}
-.hero-sub{font-size:18px;color:#777;opacity:0;transform:translateY(30px)}
+.hero-sub{font-size:18px;color:#fff;opacity:0;transform:translateY(30px)}
 .watch-btn{margin-top:40px;padding:15px 40px;border:1px solid #fff;background:#fff;color:#000;font-size:14px;cursor:pointer;transition:.3s;border-radius:50px;opacity:0;transform:translateY(30px)}
 .watch-btn:hover{background:#f5f5f5}
 .section{padding:100px 5%;position:relative}
@@ -188,6 +191,11 @@ footer{padding:40px 5%;text-align:center;color:#555;font-size:14px;border-top:1p
 </nav>
 
 <section class="hero">
+<div class="hero-thumbs">
+<div class="thumb-col" id="thumb-col-1"></div>
+<div class="thumb-col" id="thumb-col-2"></div>
+<div class="thumb-col" id="thumb-col-3"></div>
+</div>
 <h1 class="hero-title">Marek Walecki</h1>
 <p class="hero-sub">MUSIC VIDEOS / CREATIVE DIRECTION / VISUALS</p>
 <button class="watch-btn">OBEJRZYJ PRACE</button>
@@ -367,6 +375,32 @@ marekwalecki1@gmail.com<br>
         gsap.to('.hero-title', { opacity: 1, y: 0, duration: 1, delay: 0.5 });
         gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 1, delay: 0.7 });
         gsap.to('.watch-btn', { opacity: 1, y: 0, duration: 1, delay: 0.9 });
+
+        // Hero thumbnails
+        const heroThumbs = [
+            "67CTCgzfpjI", "1VtFT6kg_QU", "e2AgfLht_pU",
+            "f2WYLQxQZUY", "l4AhdfbHRKw", "ZNV_I_Ce8Qk",
+            "reARs2O__g8", "SIgZOc7F5ms"
+        ];
+        const cols = [
+            document.getElementById('thumb-col-1'),
+            document.getElementById('thumb-col-2'),
+            document.getElementById('thumb-col-3')
+        ];
+        heroThumbs.forEach((id, i) => {
+            const img = document.createElement('img');
+            img.src = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+            img.alt = 'Video thumbnail';
+            cols[i % 3].appendChild(img);
+        });
+
+        gsap.from('.hero-thumbs img', {
+            opacity: 0,
+            y: 50,
+            stagger: 0.1,
+            duration: 0.8,
+            delay: 0.3
+        });
 
         document.querySelector('.watch-btn').addEventListener('click', () => {
             document.querySelector('#videos').scrollIntoView({ behavior: 'smooth' });
