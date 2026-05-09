@@ -358,7 +358,7 @@ marekwalecki1@gmail.com<br>
                 card.className = 'video-card';
                 card.dataset.index = index;
                 card.innerHTML = `
-                    <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="${videoData[index]?.title || 'Video'}">
+                    <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${videoId}/mqdefault.jpg'" alt="${videoData[index]?.title || 'Video'}">
                     <div class="play-icon">▶</div>
                     <div class="video-title">${videoData[index]?.title || ''}</div>
                 `;
@@ -430,6 +430,7 @@ marekwalecki1@gmail.com<br>
         heroThumbs.forEach((id, i) => {
             const img = document.createElement('img');
             img.src = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+            img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/default.jpg`; };
             img.alt = 'Video thumbnail';
             cols[i % 3].appendChild(img);
         });
